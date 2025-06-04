@@ -11,7 +11,9 @@ SCOPE = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/au
 
 # Get sheet object
 def get_sheet():
-    creds = ServiceAccountCredentials.from_json_keyfile_name("service_account.json", SCOPE)
+    #creds = ServiceAccountCredentials.from_json_keyfile_name("service_account.json", SCOPE)
+    creds_dict = json.loads(st.secrets["SERVICE_ACCOUNT_JSON"])
+    creds = ServiceAccountCredentials.from_json_keyfile_dict(creds_dict, SCOPE)
     client = gspread.authorize(creds)
     sheet = client.open_by_key(SPREADSHEET_ID).sheet1
     return sheet
